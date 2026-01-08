@@ -4,7 +4,7 @@ import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 
 const poppins = Poppins({
-  weight: ["100", "200", "400", "500", "600", "700", "800"]
+  weight: ["100", "200", "400", "500", "600", "800"]
 })
 
 export const metadata = {
