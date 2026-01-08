@@ -34,10 +34,10 @@ const NavBar = () => {
                 </ul>
             </div>
             <div className="navbar-end gap-3">
-                <Link href={"/cart"} className='btn btn-primary text-white'>
+                <Link href={"/cart"} className='text-primary'>
                     <IoCart size={30}/>
                 </Link>
-                <Link href={"/login"} className='btn btn-md btn-primary btn-outline'>Login</Link>
+                <Link href={"/login"} className='btn btn-sm btn-primary btn-outline'>Login</Link>
             </div>
         </div>
     );
