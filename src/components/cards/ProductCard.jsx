@@ -1,0 +1,88 @@
+"use client"; 
+import Image from "next/image";
+import React from "react";
+import { FaStar, FaShoppingCart, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+
+const ProductCard = ({ product }) => {
+  const { title, image, price, discount, ratings, reviews, sold } = product;
+
+  // Calculate Discounted Price
+  const discountedPrice = price - (price * discount) / 100;
+
+  // Function to render star rating dynamically
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<FaStar key={i} className="text-yellow-400" />);
+      } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
+        stars.push(<FaStarHalfAlt key={i} className="text-yellow-400" />);
+      } else {
+        stars.push(<FaRegStar key={i} className="text-gray-300" />);
+      }
+    }
+    return stars;
+  };
+
+  return (
+    <div className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 h-full border border-base-200 group">
+      {/* Image Section */}
+      <figure className="relative pt-[75%] overflow-hidden">
+        <Image
+          width={200}
+          height={180}
+          src={image}
+          alt={title}
+          className="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+        {/* Discount Badge */}
+        {discount > 0 && (
+          <div className="absolute top-2 right-2 badge badge-secondary font-bold">
+            -{discount}%
+          </div>
+        )}
+      </figure>
+
+      {/* Body Section */}
+      <div className="card-body p-4">
+        {/* Title */}
+        <h2 className="card-title text-lg leading-tight line-clamp-2 h-12" title={title}>
+          {title}
+        </h2>
+
+        {/* Ratings & Sold */}
+        <div className="flex items-center justify-between text-sm mt-2">
+          <div className="flex items-center gap-1">
+            <div className="flex text-sm">{renderStars(ratings)}</div>
+            <span className="text-gray-500 text-xs">({reviews})</span>
+          </div>
+          <span className="badge badge-ghost badge-sm text-xs text-gray-500">
+            {sold} Sold
+          </span>
+        </div>
+
+        {/* Price Section */}
+        <div className="mt-3 flex items-baseline gap-2">
+          <span className="text-2xl font-bold text-primary">
+            ৳{discountedPrice.toLocaleString()}
+          </span>
+          {discount > 0 && (
+            <span className="text-sm text-gray-400 line-through decoration-red-500">
+              ৳{price.toLocaleString()}
+            </span>
+          )}
+        </div>
+
+        {/* Action Button */}
+        <div className="card-actions mt-auto pt-4">
+          <button className="btn btn-primary text-white w-full gap-2 hover:scale-[1.02] transition-transform">
+            <FaShoppingCart />
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;
