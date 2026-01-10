@@ -1,19 +1,25 @@
-"use client";
-
+import { getSingleProducts } from "@/actions/products";
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import { 
   FaStar, 
   FaShoppingCart, 
   FaHeart, 
-  FaShareAlt, 
   FaCheckCircle, 
   FaMinus, 
   FaPlus 
 } from "react-icons/fa";
 
-const ProductDetails = ({ product }) => {
-  const [quantity, setQuantity] = useState(1);
+// import { getSingleProducts } from "@/lib/dbConnect"; 
+
+const ProductDetails = async ({ params }) => {
+  const { id } = await params;
+  const product = await getSingleProducts(id); 
+
+  if (!product) {
+    return <div className="text-center py-20 text-2xl">Product not found!</div>;
+  }
+
   const { 
     title, 
     bangla, 
@@ -28,26 +34,22 @@ const ProductDetails = ({ product }) => {
     info 
   } = product;
 
-  // Calculate Price
   const discountedPrice = price - (price * discount) / 100;
-
-  // Handle Quantity
-  const handleQuantity = (type) => {
-    if (type === "dec" && quantity > 1) setQuantity(prev => prev - 1);
-    if (type === "inc") setQuantity(prev => prev + 1);
-  };
 
   return (
     <div className="container mx-auto px-4 py-8 font-sans">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         
         {/* --- LEFT COLUMN: IMAGE --- */}
-        <div className="relative group">
+        <div className="relative">
           <div className="overflow-hidden rounded-xl border border-base-300 bg-base-100 shadow-sm">
             <Image 
               src={image} 
               alt={title} 
-              className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+              width={800} 
+              height={800}
+              priority
+              className="w-full h-auto object-cover"
             />
           </div>
           {discount > 0 && (
@@ -69,16 +71,13 @@ const ProductDetails = ({ product }) => {
               {bangla}
             </h2>
             
-            {/* Meta Data */}
             <div className="flex items-center gap-4 mt-3 text-sm">
               <div className="flex items-center text-yellow-400 gap-1">
                 <span className="font-bold text-base-content">{ratings}</span>
                 <FaStar />
               </div>
               <span className="text-gray-400">|</span>
-              <span className="hover:underline cursor-pointer text-primary">
-                {reviews} Reviews
-              </span>
+              <span className="text-primary">{reviews} Reviews</span>
               <span className="text-gray-400">|</span>
               <span className="badge badge-ghost text-xs">{sold} Sold</span>
             </div>
@@ -101,11 +100,11 @@ const ProductDetails = ({ product }) => {
             )}
           </div>
 
-          {/* Key Features (Info) */}
+          {/* Key Features */}
           <div className="space-y-2">
             <h3 className="font-semibold text-base-content">Key Highlights:</h3>
             <ul className="grid grid-cols-1 gap-2">
-              {info.map((item, index) => (
+              {info?.map((item, index) => (
                 <li key={index} className="flex items-center gap-2 text-sm text-gray-600">
                   <FaCheckCircle className="text-success shrink-0" />
                   {item}
@@ -114,45 +113,28 @@ const ProductDetails = ({ product }) => {
             </ul>
           </div>
 
-          {/* Actions */}
+          {/* Actions - Note: For quantity logic, this section should be a separate client component */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-base-300">
-            {/* Quantity Selector */}
             <div className="join border border-base-300">
-              <button 
-                className="join-item btn btn-ghost btn-sm px-3"
-                onClick={() => handleQuantity("dec")}
-              >
-                <FaMinus size={10} />
-              </button>
-              <span className="join-item btn btn-ghost btn-sm no-animation cursor-default w-12 text-lg">
-                {quantity}
-              </span>
-              <button 
-                className="join-item btn btn-ghost btn-sm px-3"
-                onClick={() => handleQuantity("inc")}
-              >
-                <FaPlus size={10} />
-              </button>
+              <button className="join-item btn btn-ghost btn-sm px-3"><FaMinus size={10} /></button>
+              <span className="join-item btn btn-ghost btn-sm no-animation w-12 text-lg">1</span>
+              <button className="join-item btn btn-ghost btn-sm px-3"><FaPlus size={10} /></button>
             </div>
 
-            {/* Buttons */}
-            <button className="btn btn-primary flex-1 gap-2 shadow-lg hover:shadow-xl">
+            <button className="btn btn-primary flex-1 gap-2 shadow-lg">
               <FaShoppingCart /> Add to Cart
             </button>
-            <button className="btn btn-circle btn-ghost border border-base-300 text-red-500 hover:bg-red-50 hover:border-red-200">
+            <button className="btn btn-circle btn-ghost border border-base-300 text-red-500">
               <FaHeart />
             </button>
           </div>
 
-          {/* Description & QnA Tabs/Sections */}
           <div className="divider"></div>
 
           {/* Description */}
           <div className="collapse collapse-arrow bg-base-100 border border-base-200">
-            <input type="radio" name="my-accordion-2" defaultChecked /> 
-            <div className="collapse-title text-lg font-medium">
-              Product Description
-            </div>
+            <input type="checkbox" defaultChecked /> 
+            <div className="collapse-title text-lg font-medium">Product Description</div>
             <div className="collapse-content text-gray-600 leading-relaxed whitespace-pre-line">
               {description}
             </div>
@@ -160,12 +142,10 @@ const ProductDetails = ({ product }) => {
 
           {/* Q&A Section */}
           <div className="collapse collapse-arrow bg-base-100 border border-base-200 mt-2">
-            <input type="radio" name="my-accordion-2" /> 
-            <div className="collapse-title text-lg font-medium">
-              Q&A ({qna.length})
-            </div>
+            <input type="checkbox" /> 
+            <div className="collapse-title text-lg font-medium">Q&A ({qna?.length || 0})</div>
             <div className="collapse-content space-y-4">
-              {qna.map((q, i) => (
+              {qna?.map((q, i) => (
                 <div key={i} className="bg-base-200 p-3 rounded-lg text-sm">
                   <p className="font-bold text-gray-800 flex gap-2">
                     <span className="text-primary">Q:</span> {q.question}

@@ -1,10 +1,11 @@
-"use client"; 
+"use client";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaStar, FaShoppingCart, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 
 const ProductCard = ({ product }) => {
-  const { title, image, price, discount, ratings, reviews, sold } = product;
+  const { _id, title, image, price, discount, ratings, reviews, sold } = product;
 
   // Calculate Discounted Price
   const discountedPrice = price - (price * discount) / 100;
@@ -74,12 +75,17 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Action Button */}
-        <div className="card-actions mt-auto pt-4">
-          <button className="btn btn-primary text-white w-full gap-2 hover:scale-[1.02] transition-transform">
-            <FaShoppingCart />
+        <div className="flex flex-col sm:flex-row gap-2 mt-auto pt-4">
+          <button className="btn btn-primary text-white flex-1 gap-1 hover:scale-[1.02] transition-transform px-2">
+            <FaShoppingCart className="hidden xs:inline" />
             Add to Cart
           </button>
+
+          <Link href={`products/${_id}`} className="btn btn-primary btn-outline hover:text-white flex-1 gap-1 hover:scale-[1.02] transition-transform px-2">
+            View Details
+          </Link>
         </div>
+
       </div>
     </div>
   );

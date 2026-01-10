@@ -1,17 +1,17 @@
-"use client"
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-const NavLink = ({href, children}) => {
-    const path = usePathname();
-    return (
-        <Link 
-        href={href} className={`${path.startsWith(href) && "text-primary"} font-semibold`}
-        >
-            {children}
-        </Link>
-    );
+const NavLink = ({ href, children }) => {
+  const path = usePathname();
+
+  const isActive = href === "/" ? path === "/" : path.startsWith(href);
+  return (
+    <Link
+      href={href}
+      className={`${isActive ? "text-primary" : ""} font-semibold`}>
+      {children}
+    </Link>
+  );
 };
-
 export default NavLink;
