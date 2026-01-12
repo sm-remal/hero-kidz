@@ -8,7 +8,7 @@ const Banner = () => {
 
                 {/* Text Section */}
                 <div className='flex-1 space-y-4.5 text-center lg:text-left'>
-                    <h2 className='text-5xl font-bold'>Build a beautiful future for <span className='text-primary'>your child</span></h2>
+                    <h2 className='text-6xl font-bold'>Build a beautiful future for <span className='text-primary'>your child</span></h2>
                     <p>Every small step you take now helps build a brighter, more confident tomorrow for your child</p>
                     <button className='btn btn-primary text-white'>Explore Toy</button>
                 </div>
