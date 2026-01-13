@@ -2,6 +2,26 @@ import React from 'react';
 import ProductCard from '../cards/ProductCard';
 import { getProducts } from '@/actions/products';
 
+export const metadata = {
+    title: "Our Programs & Details",
+    description:
+        "Explore Hero Kidz programs designed to support children's learning, creativity, and overall development.",
+
+    openGraph: {
+        title: "Hero Kidz Programs & Details",
+        description:
+            "Discover how Hero Kidz helps children grow through structured learning and care.",
+        images: [
+            {
+                url: "https://i.ibb.co/zTbL48y1/image.png",
+                width: 1200,
+                height: 630,
+                alt: "Hero Kidz Details Page",
+            },
+        ],
+    },
+};
+
 
 const Products = async () => {
     const products = await getProducts()
