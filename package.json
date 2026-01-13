@@ -9,12 +9,16 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "bcryptjs": "^3.0.3",
+    "clsx": "^2.1.1",
     "daisyui": "^5.5.14",
+    "lucide-react": "^0.562.0",
     "mongodb": "^7.0.0",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-hook-form": "^7.71.0",
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
