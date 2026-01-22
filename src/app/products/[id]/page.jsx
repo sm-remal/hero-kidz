@@ -168,6 +168,7 @@
 
 
 import { getSingleProducts } from "@/actions/products";
+import CartButton from "@/components/button/CartButton";
 import Image from "next/image";
 import React from "react";
 import {
@@ -288,9 +289,9 @@ const ProductDetails = async ({ params }) => {
               <button className="join-item btn btn-ghost btn-sm px-3"><FaPlus size={10} /></button>
             </div>
 
-            <button className="btn btn-primary flex-1 gap-2 shadow-lg">
-              <FaShoppingCart /> Add to Cart
-            </button>
+              {/* Add to Cart Button  */}
+            <CartButton product={product}></CartButton>
+
             <button className="btn btn-circle btn-ghost border border-base-300 text-red-500">
               <FaHeart />
             </button>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react"
 import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
 
 const LoginPage = () => {
@@ -18,11 +19,7 @@ const LoginPage = () => {
 
   // Handle Form Submission
   const onSubmit = async (data) => {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("Login Data:", data);
-    alert("Login Successful! (Check console for data)");
-    // Redirect logic would go here
+   signIn("credentials", data)
   };
 
   return (
@@ -176,7 +173,7 @@ const LoginPage = () => {
           {/* Sign Up Link */} 
           <p className="text-center text-sm text-gray-600 mt-6">
             Do not have an account yet?{" "}
-            <Link href="/signup" className="font-bold text-primary hover:underline">
+            <Link href="/registration" className="font-bold text-primary hover:underline">
               Sign Up Free
             </Link>
           </p>
