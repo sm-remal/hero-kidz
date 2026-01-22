@@ -6,7 +6,7 @@ const ContactPage = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add your form submission logic here (e.g., EmailJS or API call)
+        // Add your form submission logic here
         alert("Message Sent! We will get back to you soon.");
     };
 
@@ -53,10 +53,10 @@ const ContactPage = () => {
                             />
                         </div>
 
-                        {/* Embedded Map (Placeholder style) */}
+                        {/* Embedded Map */}
                         <div className="w-full h-64 bg-gray-200 rounded-2xl overflow-hidden shadow-inner border border-base-200 relative group">
                             <iframe 
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d233667.8223908687!2d90.27923710646989!3d23.780887457084543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka%2C%20Bangladesh!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.902307527632!2d90.39103631536268!3d23.75086298458908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b888ad3b91bf%3A0xbcb44ad6b0f54070!2sDhaka!5e0!3m2!1sen!2sbd!4v1689625345678!5m2!1sen!2sbd" 
                                 width="100%" 
                                 height="100%" 
                                 style={{ border: 0 }} 
@@ -99,18 +99,23 @@ const ContactPage = () => {
                                     <span className="label-text font-semibold">Subject</span>
                                 </label>
                                 <select className="select select-bordered w-full focus:select-primary focus:bg-primary/5 transition-all">
-                                    <option disabled selected>Select an option</option>
+                                    <option disabled defaultValue>Select an option</option>
                                     <option>General Inquiry</option>
                                     <option>Order Support</option>
                                     <option>Wholesale</option>
                                 </select>
                             </div>
 
+                            {/* FIXED TEXTAREA SECTION */}
                             <div className="form-control w-full">
-                                <label className="label">
+                                <label className="label" htmlFor="message">
                                     <span className="label-text font-semibold">Your Message</span>
                                 </label>
-                                <textarea className="textarea textarea-bordered h-32 focus:textarea-primary focus:bg-primary/5 transition-all text-base" placeholder="How can we help you today?"></textarea>
+                                <textarea 
+                                    id="message"
+                                    className="textarea textarea-bordered h-32 w-full focus:textarea-primary focus:bg-primary/5 transition-all text-base" 
+                                    placeholder="How can we help you today?"
+                                ></textarea>
                             </div>
 
                             <button type="submit" className="btn btn-primary w-full text-white text-lg gap-2 mt-4 hover:scale-[1.01] transition-transform">
