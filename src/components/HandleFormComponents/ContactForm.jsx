@@ -1,4 +1,4 @@
-"use client"; // এটি একটি ক্লায়েন্ট কম্পোনেন্ট
+"use client"; 
 
 import React from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
@@ -6,7 +6,7 @@ import { FaPaperPlane } from 'react-icons/fa';
 const ContactForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
-        // আপনার API বা EmailJS লজিক এখানে দিন
+        
         alert("Message Sent! We will get back to you soon.");
     };
 
