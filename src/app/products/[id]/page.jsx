@@ -9,9 +9,9 @@ import {
   FaCheckCircle,
   FaMinus,
   FaPlus
-} from "react-icons/fa";
+} from "react-icons/fa";  
 
-export async function generateStaticParams() {
+export async function generateStaticParams() {  
   try {
     const products = await getProducts();
     // Take products where is Id and image
@@ -25,6 +25,8 @@ export async function generateStaticParams() {
     return [];
   }
 }
+
+export const dynamic = 'force-dynamic'
 
 const ProductDetails = async ({ params }) => {
   const { id } = await params;
@@ -178,4 +180,4 @@ const ProductDetails = async ({ params }) => {
   );
 };
 
-export default ProductDetails;
+export default ProductDetails; 
