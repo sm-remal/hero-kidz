@@ -12,10 +12,18 @@ import {
 } from "react-icons/fa";
 
 export async function generateStaticParams() {
-    const products = await getProducts();
-    return products.map((product) => ({
-        id: product._id.toString(),
-    }));
+    try {
+        const products = await getProducts();
+        // Take products where is Id and image
+        return products
+            .filter(p => p?._id && p?.image) 
+            .map((product) => ({
+                id: product._id.toString(),
+            }));
+    } catch (error) {
+        console.error("Build static params error:", error);
+        return [];
+    }
 }
 
 const ProductDetails = async ({ params }) => {
