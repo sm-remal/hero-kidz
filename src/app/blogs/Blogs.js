@@ -1,0 +1,10 @@
+export const Blogs = [
+    { id: 1, title: "Best Educational Toys for Toddlers", excerpt: "Discover toys that help in cognitive development...", author: "Sarah", date: "Jan 15", category: "Learning", image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=600", size: "large" },
+    { id: 2, title: "Creative Play Tips", excerpt: "Why messy play is crucial...", author: "Rakib", date: "Jan 12", category: "Parenting", image: "https://images.unsplash.com/photo-1566367576585-051277d52997?w=500", size: "small" },
+    { id: 3, title: "Toy Organization", excerpt: "Manage the mess easily...", author: "Mila", date: "Jan 08", category: "Tips", image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=500", size: "small" },
+    { id: 4, title: "Safety First: Small Parts", excerpt: "What to look for in toy safety...", author: "Dr. Asif", date: "Jan 05", category: "Safety", image: "https://images.unsplash.com/photo-1531315630201-bb15abeb1653?w=500", size: "small" },
+    { id: 5, title: "Outdoor Fun for Kids", excerpt: "Get them moving outside...", author: "Nabil", date: "Jan 01", category: "Activities", image: "https://i.pinimg.com/1200x/a4/b4/b0/a4b4b0a38d387f19e947104ce1f30817.jpg", size: "large" },
+    { id: 6, title: "Reading Habits", excerpt: "Starting early with books...", author: "Mila", date: "Dec 28", category: "Learning", image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500", size: "small" },
+    { id: 7, title: "Wooden vs Plastic", excerpt: "The great toy debate...", author: "Sarah", date: "Dec 25", category: "Toys", image: "https://i.pinimg.com/1200x/98/7f/08/987f0866f03c2e6170b620af9c62b4c5.jpg", size: "small" },
+    { id: 8, title: "Art & Craft Ideas", excerpt: "DIY projects for weekends...", author: "Rakib", date: "Dec 20", category: "Activities", image: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=500", size: "small" },
+];

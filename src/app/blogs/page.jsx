@@ -1,105 +1,88 @@
 import React from 'react';
-import { FaCalendarAlt, FaUser, FaArrowRight } from 'react-icons/fa';
-import BlogFilter from '@/components/HandleFormComponents/BlogFilter'; 
-
-// Mock Data for Blogs (Real project-এ এটি API থেকে আসবে)
-const blogs = [
-    {
-        id: 1,
-        title: "Best Educational Toys for Toddlers in 2024",
-        excerpt: "Discover which toys help in cognitive development and motor skills for children aged 1-3...",
-        author: "Sarah Khan",
-        date: "Jan 15, 2024",
-        category: "Development",
-        image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500"
-    },
-    {
-        id: 2,
-        title: "The Importance of Creative Play in Childhood",
-        excerpt: "Why messy play and imagination are crucial for building a child's future problem-solving skills...",
-        author: "Dr. Rakib",
-        date: "Jan 12, 2024",
-        category: "Parenting",
-        image: "https://images.unsplash.com/photo-1566367576585-051277d52997?q=80&w=500"
-    },
-    {
-        id: 3,
-        title: "How to Keep Your Child's Toys Organized",
-        excerpt: "Small tips and tricks to manage the toy mess in your living room without losing your mind...",
-        author: "Mila Ahmed",
-        date: "Jan 08, 2024",
-        category: "Tips & Tricks",
-        image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=500"
-    }
-];
+import { FaCalendarAlt, FaArrowRight, FaPlayCircle, FaFire } from 'react-icons/fa';
+import BlogFilter from '@/components/HandleFormComponents/BlogFilter';
+import {Blogs} from '@/app/blogs/Blogs'
+import Image from 'next/image';
 
 const BlogPage = () => {
     return (
-        <div className="bg-base-100 min-h-screen pb-20">
+        <div className="pb-10 relative">
             
-            {/* Hero Section */}
-            <section className="bg-primary/10 py-20 text-center px-5">
-                <div className="max-w-3xl mx-auto space-y-4">
-                    <h1 className="text-4xl md:text-6xl font-black text-gray-800 tracking-tight">
-                        Our <span className="text-primary">Kidz</span> Blog
+            {/* Header */}
+            <section className="pt-10 pb-12 px-5 text-center">
+                <div className="max-w-3xl mx-auto">
+                    <div className="flex justify-center items-center gap-2 mb-4">
+                        <FaFire className="text-orange-500 animate-pulse" />
+                        <span className="text-primary font-bold tracking-widest uppercase text-xs">The Hero Kidz Journal</span>
+                    </div>
+                    <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
+                        Our Latest <span className="text-primary">Stories</span>
                     </h1>
-                    <p className="text-lg text-gray-600">
-                        Insights, tips, and stories about building a fun and educational environment for your little heroes.
-                    </p>
                 </div>
             </section>
 
-            {/* Filter & Search (Client Component) */}
             <BlogFilter />
 
-            {/* Blog Grid */}
-            <section className="max-w-[1440px] mx-auto px-5 mt-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {blogs.map((blog) => (
-                        <div key={blog.id} className="group bg-white rounded-[2rem] overflow-hidden border border-base-200 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
-                            {/* Image Container */}
-                            <div className="relative h-64 overflow-hidden">
-                                <img 
-                                    src={blog.image} 
-                                    alt={blog.title} 
-                                    className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
-                                />
-                                <div className="absolute top-4 left-4">
-                                    <span className="bg-white/90 backdrop-blur-md text-primary px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
-                                        {blog.category}
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Content */}
-                            <div className="p-8 space-y-4">
-                                <div className="flex items-center gap-4 text-xs text-gray-400">
-                                    <span className="flex items-center gap-1"><FaCalendarAlt /> {blog.date}</span>
-                                    <span className="flex items-center gap-1"><FaUser /> {blog.author}</span>
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-800 group-hover:text-primary transition-colors">
+            {/* Main Bento Grid */}
+            <section className="max-w-[1440px] mx-auto px-5 mt-12">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[350px]">
+                    {Blogs.map((blog) => (
+                        <div 
+                            key={blog.id} 
+                            className={`relative group overflow-hidden rounded-[2.5rem] transition-all duration-500 border-4 border-white shadow-lg ${
+                                blog.size === 'large' ? 'md:col-span-2 md:row-span-2' : 'md:col-span-2'
+                            }`}
+                        >
+                            <Image
+                            src={blog.image} 
+                            alt={blog.title} 
+                            fill
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                            <div className="absolute bottom-0 left-0 p-8 w-full">
+                                <span className="bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-lg mb-3 inline-block uppercase tracking-wider">
+                                    {blog.category}
+                                </span>
+                                <h3 className={`font-bold text-white leading-tight mb-3 ${blog.size === 'large' ? 'text-3xl' : 'text-2xl'}`}>
                                     {blog.title}
                                 </h3>
-                                <p className="text-gray-500 text-sm leading-relaxed">
-                                    {blog.excerpt}
-                                </p>
-                                <div className="pt-4">
-                                    <button className="flex items-center gap-2 text-primary font-bold group/btn">
-                                        Read More 
-                                        <FaArrowRight className="group-hover/btn:translate-x-2 transition-transform" />
-                                    </button>
-                                </div>
+                                <p className="text-white/70 text-sm line-clamp-2 mb-4">{blog.excerpt}</p>
+                                <button className="text-white font-bold flex items-center gap-2 hover:text-primary transition-colors">
+                                    Read Article <FaArrowRight />
+                                </button>
                             </div>
                         </div>
                     ))}
                 </div>
+            </section>
 
-                {/* Pagination */}
-                <div className="flex justify-center mt-16">
-                    <div className="join shadow-md">
-                        <button className="join-item btn bg-white border-base-200">1</button>
-                        <button className="join-item btn btn-primary">2</button>
-                        <button className="join-item btn bg-white border-base-200">3</button>
+            {/* Featured Video Section */}
+            <section className="max-w-[1440px] mx-auto px-5 mt-24">
+                <div className="bg-slate-900 rounded-[3rem] p-8 md:p-16 overflow-hidden relative">
+                    <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/10 blur-[120px]" />
+                    <div className="flex flex-col md:flex-row items-center gap-12 relative z-10">
+                        <div className="flex-1 space-y-6">
+                            <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">Watch Our Toy Review Series!</h2>
+                            <p className="text-gray-400 text-lg">Subscribe to our channel to see the latest toys in action. We unbox and test for quality and fun.</p>
+                            <button className="btn btn-primary rounded-full px-8 text-white gap-2">
+                                <FaPlayCircle /> Watch on YouTube
+                            </button>
+                        </div>
+                        <div className="flex-1 w-full aspect-video bg-gray-800 rounded-3xl border-8 border-gray-700 shadow-2xl flex items-center justify-center cursor-pointer group">
+                             <FaPlayCircle size={80} className="text-white/20 group-hover:text-primary group-hover:scale-110 transition-all" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Newsletter Section */}
+            <section className="max-w-4xl mx-auto px-5 mt-24 text-center pb-10">
+                <div className="bg-primary/5 rounded-[3rem] p-12 border border-primary/10">
+                    <h3 className="text-3xl font-black text-gray-800 mb-4">Never Miss a Story</h3>
+                    <p className="text-gray-500 mb-8">Join 5,000+ parents who get our best parenting tips and toy deals via email.</p>
+                    <div className="flex flex-col md:flex-row gap-3 max-w-lg mx-auto">
+                        <input type="email" placeholder="Your email address" className="input input-bordered rounded-full flex-1 focus:ring-primary" />
+                        <button className="btn btn-primary rounded-full px-10 text-white">Subscribe</button>
                     </div>
                 </div>
             </section>
