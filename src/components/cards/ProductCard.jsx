@@ -5,7 +5,7 @@ import React from "react";
 import { FaStar, FaShoppingCart, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 
 const ProductCard = ({ product }) => {
-  const { _id, title, image, price, discount, ratings, reviews, sold } = product;
+  const { _id, title, image, price, discount, ratings, reviews, sold } = product || {};
 
   // Calculate Discounted Price
   const discountedPrice = price - (price * discount) / 100;
@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
         <Image
           width={200}
           height={180}
-          src={image}
+          src={image && image.startsWith('http') ? image : "https://i.ibb.co/Txqm7j30/logo.png"}
           alt={title}
           className="absolute top-0 left-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
