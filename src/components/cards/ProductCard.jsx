@@ -8,7 +8,10 @@ const ProductCard = ({ product }) => {
   const { _id, title, image, price, discount, ratings, reviews, sold } = product || {};
 
   // Calculate Discounted Price
-  const discountedPrice = price - (price * discount) / 100;
+  const safePrice = price || 0;
+  const safeDiscount = discount || 0;
+  const discountedPrice = safePrice - (safePrice * safeDiscount) / 100;
+
 
   // Function to render star rating dynamically
   const renderStars = (rating) => {
@@ -54,7 +57,7 @@ const ProductCard = ({ product }) => {
         {/* Ratings & Sold */}
         <div className="flex items-center justify-between text-sm mt-2">
           <div className="flex items-center gap-1">
-            <div className="flex text-sm">{renderStars(ratings)}</div>
+            <div className="flex text-sm">{renderStars(ratings || 0)}</div>
             <span className="text-gray-500 text-xs">({reviews})</span>
           </div>
           <span className="badge badge-ghost badge-sm text-xs text-gray-500">
@@ -81,7 +84,7 @@ const ProductCard = ({ product }) => {
             Add to Cart
           </button>
 
-          <Link href={`products/${_id}`} className="btn btn-primary btn-outline hover:text-white flex-1 gap-1 hover:scale-[1.02] transition-transform px-2">
+          <Link href={`/products/${_id}`} className="btn btn-primary btn-outline hover:text-white flex-1 gap-1 hover:scale-[1.02] transition-transform px-2">
             View Details
           </Link>
         </div>
