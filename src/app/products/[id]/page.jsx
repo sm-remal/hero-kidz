@@ -12,18 +12,18 @@ import {
 } from "react-icons/fa";
 
 export async function generateStaticParams() {
-    try {
-        const products = await getProducts();
-        // Take products where is Id and image
-        return products
-            .filter(p => p?._id && p?.image) 
-            .map((product) => ({
-                id: product._id.toString(),
-            }));
-    } catch (error) {
-        console.error("Build static params error:", error);
-        return [];
-    }
+  try {
+    const products = await getProducts();
+    // Take products where is Id and image
+    return products
+      .filter(p => p?._id && p?.image)
+      .map((product) => ({
+        id: product._id.toString(),
+      }));
+  } catch (error) {
+    console.error("Build static params error:", error);
+    return [];
+  }
 }
 
 const ProductDetails = async ({ params }) => {
@@ -59,8 +59,8 @@ const ProductDetails = async ({ params }) => {
         <div className="relative">
           <div className="overflow-hidden rounded-xl border border-base-300 bg-base-100 shadow-sm">
             <Image
-              src={image}
-              alt={title}
+              src={image ? image : "/images/placeholder.png"}
+              alt={title || "product image"}
               width={800}
               height={800}
               priority
@@ -135,7 +135,7 @@ const ProductDetails = async ({ params }) => {
               <button className="join-item btn btn-ghost btn-sm px-3"><FaPlus size={10} /></button>
             </div>
 
-              {/* Add to Cart Button  */}
+            {/* Add to Cart Button  */}
             <CartButton product={product}></CartButton>
 
             <button className="btn btn-circle btn-ghost border border-base-300 text-red-500">
