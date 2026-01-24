@@ -21,20 +21,13 @@ export const authOptions = {
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) return null;
 
-        return { id: user._id.toString(), name: user.name, email: user.email, role: user.role };
+        return { id: user._id.toString(), name: user.name, email: user.email, role: user.role }; 
       },
     }),
 
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorization: {
-        params: {
-          prompt: "select_account",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
     }),
   ],
   pages: {

@@ -16,25 +16,26 @@ const LoginPage = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
 
   const onSubmit = async (data) => {
-  //  Add res variable
-  const res = await signIn("credentials", {
-    email: data.email,
-    password: data.password,
-    redirect: false,      
-    callbackUrl: callbackUrl, 
-  });
+    const res = await signIn("credentials", {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+      callbackUrl: callbackUrl,
+    });
 
-  if (res?.error) {
-    alert("Invalid email or password");
-    return;
-  }
+    if (res?.error) {
+      alert("Invalid email or password");
+      return;
+    }
 
-  router.push(res?.url || callbackUrl); 
-};
+    router.push(res?.url || callbackUrl);
+  };
+
 
   const handleGoogleSignIn = async () => {
-    await signIn("google", { callbackUrl });
+    await signIn("google", { callbackUrl: callbackUrl });
   };
+
 
   return (
     <div className="min-h-screen w-full flex bg-base-100 font-sans">
