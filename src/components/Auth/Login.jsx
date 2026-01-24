@@ -16,21 +16,21 @@ const LoginPage = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
 
   const onSubmit = async (data) => {
+  //  Add res variable
+  const res = await signIn("credentials", {
+    email: data.email,
+    password: data.password,
+    redirect: false,      
+    callbackUrl: callbackUrl, 
+  });
 
-    await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-      callbackUrl: "/",
-    });
+  if (res?.error) {
+    alert("Invalid email or password");
+    return;
+  }
 
-
-    if (res?.error) {
-      alert("Invalid email or password");
-    } else {
-      router.push(res.url); // ✅ use router.push instead of window.location.href
-    }
-  };
+  router.push(res?.url || callbackUrl); 
+};
 
   const handleGoogleSignIn = async () => {
     await signIn("google", { callbackUrl });
