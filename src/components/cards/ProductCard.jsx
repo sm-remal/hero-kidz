@@ -84,8 +84,10 @@ const ProductCard = ({ product }) => {
 
         {/* Action Button */}
         <div className="flex gap-2 mt-auto pt-4">
+
           {/* Client Button  */}
          <CartButton></CartButton>
+         {/* Button */}
           <Link href={`/products/${_id}`} className="btn btn-primary btn-outline hover:text-white flex-1 gap-1 hover:scale-[1.02] transition-transform px-2">
             View Details
           </Link>
