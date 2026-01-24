@@ -1,8 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { FaStar, FaShoppingCart, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+import CartButton from "../button/CartButton";
 
 const ProductCard = ({ product }) => {
   const { _id, title, image, price, discount, ratings, reviews, sold } = product || {};
@@ -12,6 +14,9 @@ const ProductCard = ({ product }) => {
   const safeDiscount = discount || 0;
   const discountedPrice = safePrice - (safePrice * safeDiscount) / 100;
 
+  const isLoading = false;
+  const router = useRouter()
+  const path = usePathname()
 
   // Function to render star rating dynamically
   const renderStars = (rating) => {
@@ -79,11 +84,8 @@ const ProductCard = ({ product }) => {
 
         {/* Action Button */}
         <div className="flex gap-2 mt-auto pt-4">
-          <button className="btn btn-primary text-white flex-1 gap-1 hover:scale-[1.02] transition-transform px-2">
-            <FaShoppingCart className="hidden xs:inline" />
-            Add to Cart
-          </button>
-
+          {/* Client Button  */}
+         <CartButton></CartButton>
           <Link href={`/products/${_id}`} className="btn btn-primary btn-outline hover:text-white flex-1 gap-1 hover:scale-[1.02] transition-transform px-2">
             View Details
           </Link>

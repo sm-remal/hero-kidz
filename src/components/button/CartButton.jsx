@@ -14,7 +14,7 @@ const CartButton = ({product}) => {
             alert(product._id)
         }
         else{
-            router.push(`/login ? callbackUrl=${path}`)
+            router.push(`/login?callbackUrl=${path}`)
         }
     }
 
