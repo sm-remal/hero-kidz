@@ -78,7 +78,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Action Button */}
-        <div className="flex flex-col sm:flex-row gap-2 mt-auto pt-4">
+        <div className="flex gap-2 mt-auto pt-4">
           <button className="btn btn-primary text-white flex-1 gap-1 hover:scale-[1.02] transition-transform px-2">
             <FaShoppingCart className="hidden xs:inline" />
             Add to Cart

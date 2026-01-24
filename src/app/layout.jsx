@@ -75,13 +75,13 @@ export default function RootLayout({ children }) {
         className={`${poppins.className} antialiased`}
       >
         <div className="flex flex-col min-h-screen">
-          <header className="py-2">
+          <header>
             <NavBar></NavBar>
           </header>
-          <main className="py-2 mt-16 flex-1">
+          <main className="flex-1 mt-24">
             {children}
           </main>
-          <footer className="py-2">
+          <footer>
             <Footer></Footer>
           </footer>
         </div>
