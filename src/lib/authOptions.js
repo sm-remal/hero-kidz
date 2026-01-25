@@ -4,6 +4,8 @@ import { dbConnect, collections } from "@/lib/dbConnect";
 import bcrypt from "bcryptjs";
 
 export const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
+  
   providers: [
     CredentialsProvider({
       name: "Credentials",
