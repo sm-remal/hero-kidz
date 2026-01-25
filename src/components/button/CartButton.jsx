@@ -5,13 +5,18 @@ import { FaShoppingCart } from 'react-icons/fa';
 
 const CartButton = ({product}) => {
 
-    const isLogin = false;
+    const isLogin = false;  
     const router = useRouter();
     const path = usePathname();
 
-    const add2cart = () => {
+    const add2cart = async() => {
         if(isLogin){
-            alert(product._id)
+          const result = await handleCart({ product, inc: true})
+          if(result.success){
+            alert("Added to cart", product.title, "success")
+          }else{
+            alert("Opps", "Something wrong happened", "error")
+          }
         }
         else{
             router.push(`/login?callbackUrl=${path}`)
