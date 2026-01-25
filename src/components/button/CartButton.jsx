@@ -68,7 +68,7 @@ const CartButton = ({ product }) => {
         <span className="loading loading-spinner loading-sm"></span>
       ) : (
         <>
-          <FaShoppingCart /> Add to Cart
+           Add to Cart
         </>
       )}
     </button>
