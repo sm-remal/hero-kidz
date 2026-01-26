@@ -10,6 +10,10 @@ const CartItem = ({ item }) => {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
 
+    const isMin = item.quantity <= 0;
+    const isMax = item.quantity >= 10;
+
+
     const updateQuantity = async (inc) => {
         startTransition(async () => {
             const result = await handleCart({
@@ -40,7 +44,7 @@ const CartItem = ({ item }) => {
                         text: "Your file has been deleted.",
                         icon: "success"
                     });
-                     router.refresh();
+                    router.refresh();
                 } else {
                     Swal.fire({
                         title: "Opps!",
@@ -78,14 +82,16 @@ const CartItem = ({ item }) => {
                 <div className="flex items-center border border-gray-200 rounded-lg bg-gray-50 p-1">
                     <button
                         onClick={() => updateQuantity(false)}
-                        className="p-1 hover:text-orange-500 transition-colors"
+                        disabled={isMin}
+                        className={`p-1 transition-colors ${isMin ? "text-gray-300 cursor-not-allowed" : "hover:text-orange-500"}`}
                     >
                         <Minus size={18} />
                     </button>
                     <span className="w-8 text-center font-bold text-gray-700">{item.quantity}</span>
                     <button
                         onClick={() => updateQuantity(true)}
-                        className="p-1 hover:text-orange-500 transition-colors"
+                        disabled={isMax}
+                        className={`p-1 transition-colors ${isMax ? "text-gray-300 cursor-not-allowed" : "hover:text-orange-500"}`}
                     >
                         <Plus size={18} />
                     </button>

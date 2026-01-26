@@ -39,7 +39,7 @@ const CartPage = async () => {
     }
 
     return (
-        <div className="max-w-7xl mx-auto px-4 py-10 bg-gray-50 min-h-screen">
+        <div className="max-w-[1440px] mx-auto px-4 py-10 min-h-screen">
             <h1 className="text-3xl font-extrabold text-gray-900 mb-3">Shopping <span className='text-orange-500'>Cart</span></h1>
             <p className='mb-8 font-medium'>Total Item: <span className='text-orange-500 font-extrabold'>{cartItemsFromServer.length}</span></p>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
