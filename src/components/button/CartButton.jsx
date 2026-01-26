@@ -31,7 +31,7 @@ const CartButton = ({ product }) => {
         if (result.isConfirmed) {
           router.push(`/login?callbackUrl=${path}`);
         }
-      });
+      }); 
       return;
     }
 
