@@ -68,9 +68,9 @@ const CartPage = async () => {
                                 <span className="text-orange-500">৳{total.toLocaleString()}</span>
                             </div>
                         </div>
-                        <button className="w-full bg-orange-500 text-white mt-8 py-4 rounded-xl font-bold hover:bg-orange-600 transition-all active:scale-95 shadow-lg shadow-orange-100">
+                        <Link href={"/checkout"} className="btn w-full bg-orange-500 text-white mt-8 py-6 rounded-xl font-bold hover:bg-orange-600 transition-all active:scale-95 shadow-lg shadow-orange-100 " disabled={!cartItems.length}>
                             Checkout Now
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>
