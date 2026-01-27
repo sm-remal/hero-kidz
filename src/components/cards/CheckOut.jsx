@@ -1,25 +1,81 @@
 "use client"
 import Image from 'next/image';
-import React from 'react';
-import { FaShieldAlt, FaCreditCard, FaTruck, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaUser } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaShieldAlt, FaCreditCard, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
+import { createOrder } from '@/actions/order';
+import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 const CheckOut = ({ cartItems = [] }) => {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
+    // Calculate totals
     const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     const shipping = subtotal > 0 ? 50 : 0;
     const total = subtotal + shipping;
 
+    // --- Handle Order Submission ---
+    const handlePlaceOrder = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        const form = e.target;
+        
+        const orderPayload = {
+            name: form.name.value,
+            email: form.email.value,
+            phone: form.phone.value,
+            address: form.address.value,
+            city: form.city.value,
+            postalCode: form.postalCode.value,
+            paymentMethod: "Cash on Delivery",
+            totalAmount: total,
+            status: "pending"
+        };
+
+        try {
+            const result = await createOrder(orderPayload);
+
+            if (result.success) {
+                Swal.fire({
+                    title: 'Order Placed!',
+                    text: 'Your order has been placed successfully.',
+                    icon: 'success',
+                    confirmButtonColor: '#f97316'
+                });
+                form.reset();
+                router.refresh();
+                router.push('/');
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong. Please try again.',
+                    icon: 'error',
+                    confirmButtonColor: '#d33'
+                });
+            }
+        } catch (error) {
+            console.error(error);
+            router.push('/cart');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div className="min-h-screen pb-10 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-[1400px] mx-auto">
+        <div className="bg-slate-50 min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
                 <header className="mb-10">
                     <h1 className="text-3xl font-black text-slate-800">Secure <span className='text-orange-500'>Checkout</span></h1>
                     <p className="text-slate-500 mt-2">Please provide your delivery details below.</p>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     
                     {/* LEFT SIDE: Information Form */}
-                    <form className="lg:col-span-7 space-y-6">
+                    <div className="lg:col-span-7 space-y-6">
                         
                         {/* Section 1: Contact Information */}
                         <div className="card bg-white shadow-sm border border-slate-200">
@@ -30,11 +86,11 @@ const CheckOut = ({ cartItems = [] }) => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="form-control w-full">
                                         <label className="label"><span className="label-text font-semibold">Email Address</span></label>
-                                        <input type="email" placeholder="example@mail.com" className="input input-bordered w-full focus:outline-primary" required />
+                                        <input name="email" type="email" placeholder="example@mail.com" className="input input-bordered w-full focus:outline-primary" required />
                                     </div>
                                     <div className="form-control w-full">
                                         <label className="label"><span className="label-text font-semibold">Phone Number</span></label>
-                                        <input type="tel" placeholder="01XXXXXXXXX" className="input input-bordered w-full focus:outline-primary" required />
+                                        <input name="phone" type="tel" placeholder="01XXXXXXXXX" className="input input-bordered w-full focus:outline-primary" required />
                                     </div>
                                 </div>
                             </div>
@@ -49,24 +105,24 @@ const CheckOut = ({ cartItems = [] }) => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div className="form-control w-full md:col-span-2">
                                         <label className="label"><span className="label-text font-semibold">Full Name</span></label>
-                                        <input type="text" placeholder="Enter your full name" className="input input-bordered w-full focus:outline-primary" required />
+                                        <input name="name" type="text" placeholder="Enter your full name" className="input input-bordered w-full focus:outline-primary" required />
                                     </div>
                                     <div className="form-control w-full md:col-span-2">
                                         <label className="label"><span className="label-text font-semibold">Street Address</span></label>
-                                        <input type="text" placeholder="House #, Road #, Area" className="input input-bordered w-full focus:outline-primary" required />
+                                        <input name="address" type="text" placeholder="House #, Road #, Area" className="input input-bordered w-full focus:outline-primary" required />
                                     </div>
                                     <div className="form-control w-full">
                                         <label className="label"><span className="label-text font-semibold">City / District</span></label>
-                                        <select className="select select-bordered w-full focus:outline-primary">
-                                            <option disabled selected>Select City</option>
-                                            <option>Dhaka</option>
-                                            <option>Chittagong</option>
-                                            <option>Sylhet</option>
+                                        <select name="city" className="select select-bordered w-full focus:outline-primary" defaultValue="Dhaka">
+                                            <option disabled>Select City</option>
+                                            <option value="Dhaka">Dhaka</option>
+                                            <option value="Chittagong">Chittagong</option>
+                                            <option value="Sylhet">Sylhet</option>
                                         </select>
                                     </div>
                                     <div className="form-control w-full">
                                         <label className="label"><span className="label-text font-semibold">Postal Code</span></label>
-                                        <input type="text" placeholder="1212" className="input input-bordered w-full focus:outline-primary" />
+                                        <input name="postalCode" type="text" placeholder="1212" className="input input-bordered w-full focus:outline-primary" />
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +136,7 @@ const CheckOut = ({ cartItems = [] }) => {
                                 </h2>
                                 <div className="space-y-3">
                                     <label className="flex items-center gap-3 p-4 border rounded-xl cursor-pointer hover:bg-slate-50 transition-all border-primary bg-primary/5">
-                                        <input type="radio" name="payment" className="radio radio-primary radio-sm" checked readOnly />
+                                        <input type="radio" name="payment" className="radio radio-primary radio-sm" defaultChecked readOnly />
                                         <div className="flex-1">
                                             <p className="font-bold text-slate-700">Cash on Delivery</p>
                                             <p className="text-xs text-slate-500">Pay with cash when your order is delivered.</p>
@@ -96,7 +152,7 @@ const CheckOut = ({ cartItems = [] }) => {
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
 
                     {/* RIGHT SIDE: Order Summary */}
                     <div className="lg:col-span-5">
@@ -145,8 +201,12 @@ const CheckOut = ({ cartItems = [] }) => {
                                     </div>
                                 </div>
 
-                                <button type="submit" className="btn btn-primary btn-block mt-8 text-lg h-14 shadow-md">
-                                    Place Order Now
+                                <button 
+                                    type="submit" 
+                                    disabled={loading || cartItems.length === 0}
+                                    className="btn btn-primary btn-block mt-8 text-lg h-14 shadow-md disabled:bg-slate-300"
+                                >
+                                    {loading ? <span className="loading loading-spinner"></span> : "Place Order Now"}
                                 </button>
 
                                 <div className="mt-6 p-4 bg-slate-50 rounded-lg flex items-start gap-3">
@@ -159,7 +219,7 @@ const CheckOut = ({ cartItems = [] }) => {
                         </div>
                     </div>
 
-                </div>
+                </form>
             </div>
             
             {/* Custom Scrollbar Styling */}

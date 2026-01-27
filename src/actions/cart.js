@@ -47,20 +47,29 @@ export const getCart = async () => {
     const { user } = await getServerSession(authOptions) || {};
     if (!user) return [];
 
-    const query = {email: user?.email};
+    const query = { email: user?.email };
     const result = await cartCollection.find(query).toArray()
     return result;
 }
 
 export const deleteItemFromCart = async (id) => {
     const { user } = await getServerSession(authOptions) || {};
-    if (!user) return {success: false};
+    if (!user) return { success: false };
 
-    if(id?.length != 24){
-        return {success: false};
+    if (id?.length != 24) {
+        return { success: false };
     }
 
-    const query = {_id: new ObjectId(id)}
+    const query = { _id: new ObjectId(id) }
     const result = await cartCollection.deleteOne(query);
-    return {success: Boolean(result.deletedCount)}
+    return { success: Boolean(result.deletedCount) }
+}
+
+export const clearCart = async () => {
+    const { user } = await getServerSession(authOptions) || {};
+    if (!user) return { success: false }
+
+    const query = {email: user?.email};
+    const result = await cartCollection.deleteMany(query);
+    return result;
 }
